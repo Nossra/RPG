@@ -17,8 +17,8 @@ public interface IArcherSpells extends ITargeting {
 	static int TS_MANA_COST = 10;
 	
 	// MULTIPLIERS
-	double AS_DAMAGE_MULTIPLIER = 3.5;
-	double TS_DAMAGE_MULTIPLIER = 5.75;
+	double AS_DAMAGE_MULTIPLIER = 2.75;
+	double TS_DAMAGE_MULTIPLIER = 0.75;
 	
 	String[] printArcher = {
 			"Aimed Shot, " + AS_MANA_COST + " MP\n   Aimed shot: Physical ability, deals " + (int)(AS_DAMAGE_MULTIPLIER*100) + "% damage but takes one round to aim.\n",
@@ -26,47 +26,60 @@ public interface IArcherSpells extends ITargeting {
 	Random rnd = new Random();
 
 	default void aimedShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
-		player.setMana(player.getMana() - AS_MANA_COST);
-		if (player.getMana() < AS_MANA_COST) {
-			notEnoughMana(player);
+		offensiveTarget(player, enemyTeam);
+		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
+			useAbility(player, enemyTeam, playerTeam);
 		} else {
-			if (((Archer) player).isAiming()) {
-				System.out.println(player.getName() + " starts to aim..\n");
-				player.setDamage((int) (player.getBaseDamage() * AS_DAMAGE_MULTIPLIER));
-				((Archer) player).setAiming(false);
+			((Archer) player).setAiming(true);
+			System.out.println(player.getName() + " targets " + enemyTeam.get(player.getInput()) + " for a heavy attack!");
+		}
+	}
+	
+	default void aiming(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+		while (((Archer) player).isAiming() == true) {
+			int miss = rnd.nextInt(100) + 1;
+			if (miss <= player.getMissChance()) {
+				missChance();
 			} else {
+				int crit = rnd.nextInt(100) + 1;
+				if (crit < player.getCriticalChance()) critChance(player);
+				enemyTeam.get(player.getInput()).setHealth((int) (-player.getDamage() * AS_DAMAGE_MULTIPLIER));
+				System.out.println(
+						player.getName() + "'s Aimed Shot dealt " + player.getDamage() * AS_DAMAGE_MULTIPLIER
+								+ " to " + enemyTeam.get(player.getInput()).getName() + ", HP: "
+								+ enemyTeam.get(player.getInput()).getHealth() + "/" + 
+								enemyTeam.get(player.getInput()).getBaseHealth());
+				System.out.println();
 				player.setDamage(player.getBaseDamage());
+				((Archer) player).setAiming(false);
 			}
 		}
 	}
 
 	default void trickShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam)
 			throws InterruptedException {
-		if (player.getMana() < TS_MANA_COST) {
-			notEnoughMana(player);
+		
+		offensiveTarget(player, enemyTeam);
+		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
+			useAbility(player, enemyTeam, playerTeam);
 		} else {
-			offensiveTarget(player, enemyTeam);
-			if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
-				useAbility(player, enemyTeam, playerTeam);
-			} else {
-				player.setMana(player.getMana() - TS_MANA_COST);
-				for (int i = 0; i < enemyTeam.size(); i++) {
-					int miss = rnd.nextInt(100) + 1;
-					if (miss <= player.getMissChance()) {
-						missChance();
-					} else {
-						int crit = rnd.nextInt(100) + 1;
-						if (crit < player.getCriticalChance())
-							critChance(player);
-						enemyTeam.get(i).setHealth(
-								(int) (enemyTeam.get(i).getHealth() - (player.getDamage() * TS_DAMAGE_MULTIPLIER)));
-						System.out.println(
-								player.getName() + "'s Trick Shot dealt " + player.getDamage() * TS_DAMAGE_MULTIPLIER
-										+ " to " + enemyTeam.get(i).getName() + ", HP: "
-										+ enemyTeam.get(i).getHealth() + "/" + enemyTeam.get(i).getBaseHealth());
-						System.out.println();
-						player.setDamage(player.getBaseDamage());
-					}
+			player.setMana(player.getMana() - TS_MANA_COST);
+			for (int i = 0; i < enemyTeam.size(); i++) {
+				int miss = rnd.nextInt(100) + 1;
+				if (miss <= player.getMissChance()) {
+					missChance();
+				} else {
+					int crit = rnd.nextInt(100) + 1;
+					if (crit < player.getCriticalChance())
+						critChance(player);
+					enemyTeam.get(i).setHealth(
+							(int) (enemyTeam.get(i).getHealth() - (player.getDamage() * TS_DAMAGE_MULTIPLIER)));
+					System.out.println(
+							player.getName() + "'s Trick Shot dealt " + player.getDamage() * TS_DAMAGE_MULTIPLIER
+									+ " to " + enemyTeam.get(i).getName() + ", HP: "
+									+ enemyTeam.get(i).getHealth() + "/" + enemyTeam.get(i).getBaseHealth());
+					System.out.println();
+					player.setDamage(player.getBaseDamage());
 				}
 			}
 		}

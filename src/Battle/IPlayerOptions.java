@@ -19,21 +19,30 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 	Scanner sc = new Scanner(System.in);
 	Random rnd = new Random();
 	
+	
 	default void chooseOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
-		System.out.println("What do you want to do?");
-		for (int i = 0; i < options.length; i++) {
-			System.out.println((i+1) + ". " + options[i]);
+		if (player instanceof Archer) {
+			Archer archer = (Archer) player;
+			if (archer.isAiming() == true) {
+				archer.aiming(player, enemyTeam, playerTeam);
+			} 
+		} else {
+			System.out.println("What do you want to do?");
+			for (int i = 0; i < options.length; i++) {
+				System.out.println((i+1) + ". " + options[i]);
+			}
+			player.setInput(Integer.parseInt(sc.nextLine()));	
+			if (player.getInput() == 1) {
+				attackEnemy(player, enemyTeam, playerTeam);
+			} else if (player.getInput() == 2) {
+				useAbility(player, enemyTeam, playerTeam);
+			} else if (player.getInput() == 3) {
+				defend(player, enemyTeam);
+			} else if (player.getInput() == 4) {
+				analyze(player, enemyTeam, playerTeam);
+			}
 		}
-		player.setInput(Integer.parseInt(sc.nextLine()));
-		if (player.getInput() == 1) {
-			attackEnemy(player, enemyTeam, playerTeam);
-		} else if (player.getInput() == 2) {
-			useAbility(player, enemyTeam, playerTeam);
-		} else if (player.getInput() == 3) {
-			defend(player, enemyTeam);
-		} else if (player.getInput() == 4) {
-			analyze(player, enemyTeam, playerTeam);
-		}
+		
 	 }
 	
 	default void attackEnemy(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {

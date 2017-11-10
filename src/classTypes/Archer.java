@@ -1,7 +1,8 @@
 package classTypes;
 
 public class Archer extends Job implements IArcherSpells {
-	protected boolean aiming;
+	
+	private boolean aiming = false;;
 	
 	public Archer(String name) {
 		this.setName(name);

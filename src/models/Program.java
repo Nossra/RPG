@@ -16,8 +16,6 @@ public class Program {
 	 * Enemy crit doesnt always yield twice the damage (HumanArcher was affected, was the first attacker out of 5.
 	 */	
 	
-	
-	//testing github again
 	public static void main(String[] args) throws InterruptedException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Job.printJobs();
 		Player player = Job.createCharacter();

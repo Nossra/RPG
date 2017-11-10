@@ -1,7 +1,6 @@
 package classTypes;
 
 public class Caster extends Job implements ICasterSpells {
-
 	
 	public Caster(String name) {
 		this.setName(name);
