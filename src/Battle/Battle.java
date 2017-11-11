@@ -65,9 +65,9 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 	public void playerTurn(int i) throws InterruptedException {
 		boolean dying = false;
 		Player player = (Player) turnOrder.get(i);
-		printStatus();
+		printStatus(getPlayers(), getEnemies());
 		System.out.println(player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
-		chooseOption(player, getEnemies(), getPlayers());
+		classOption(player, getEnemies(), getPlayers());
 		TimeUnit.SECONDS.sleep(2);
 		for (int j = 0; j < getEnemies().size(); j++) {
 			if (getEnemies().get(j).getHealth() < 1) {
@@ -112,22 +112,43 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 		 attackPlayer(getPlayers(), currentEnemy);
 	 }
 	 
-	 public void printStatus() {
+	public void printStatus(ArrayList<Player> player, ArrayList<Enemy> enemy) {
+		String header = "%-10s %-10s %-10s%n";
+		String valuesFormat = "%-10s %-10s %-10s%n";
+		System.out.printf(header, "NAME", "HP", "MP");
+		for (int i = 0; i < player.size(); i++) {
+			String hp = player.get(i).getHealth() + "/" + player.get(i).getBaseHealth();
+			String mp = player.get(i).getMana() + "/" + player.get(i).getBaseMana();
+			System.out.printf(valuesFormat,
+					player.get(i).getName(), hp, mp);
+		}
+		System.out.println();
+		String enemyHeader = "%-15s %-7s%n";
+		String enemyValues = "%-15s %-7s%n";
+		System.out.printf(enemyHeader, "NAME", "HP");
+		for (int i = 0; i < enemy.size(); i++) {
+			String hp = enemy.get(i).getHealth() + "/" + enemy.get(i).getBaseHealth();
+			System.out.printf(enemyValues, enemy.get(i).getName(), hp);
+		}
+		System.out.println();
+	}
+	 
+	/* public void printStatus() {
 		 for (int i = 0; i < player.size(); i++) {
-			 System.out.println(
-					 player.get(i).getName().toUpperCase() + " | LVL: " + player.get(i).getLevel()+ " | HP: " + (int) player.get(i).getHealth() + "/" + (int) player.get(i).getBaseHealth() +
-					 " | MP: " + player.get(i).getMana() + "/" + player.get(i).getBaseMana() + "   ");
+			 System.out.print(
+					 player.get(i).getName() + " - LVL: " + player.get(i).getLevel()+ " - HP: " + (int) player.get(i).getHealth() + "/" + (int) player.get(i).getBaseHealth() +
+					 " - MP: " + player.get(i).getMana() + "/" + player.get(i).getBaseMana() + " ||| ");
 		 }
-		 System.out.println("\n VS \n");
+		 System.out.println("\n\n\t\t\tVS \n");
 
 		 for (int j = 0; j < enemies.size(); j++) {
-			 System.out.println(
-					 enemies.get(j).getName() + " | HP: " + 
-							 (int) enemies.get(j).getHealth() + "/" + (int) enemies.get(j).getBaseHealth() + "    "
+			 System.out.print(
+					 enemies.get(j).getName() + " HP: " + 
+							 (int) enemies.get(j).getHealth() + "/" + (int) enemies.get(j).getBaseHealth() + " ||| "
 					 );
 		 }
 		 System.out.println("\n");
-	 }
+	 }*/
 	
 	public boolean isFighting() {
 		return fighting;

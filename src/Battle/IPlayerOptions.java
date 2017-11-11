@@ -19,31 +19,37 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 	Scanner sc = new Scanner(System.in);
 	Random rnd = new Random();
 	
-	
-	default void chooseOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+	default void classOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		if (player instanceof Archer) {
 			Archer archer = (Archer) player;
 			if (archer.isAiming() == true) {
 				archer.aiming(player, enemyTeam, playerTeam);
-			} 
-		} else {
-			System.out.println("What do you want to do?");
-			for (int i = 0; i < options.length; i++) {
-				System.out.println((i+1) + ". " + options[i]);
+			} else {
+				chooseOption(player, enemyTeam, playerTeam);
 			}
-			player.setInput(Integer.parseInt(sc.nextLine()));	
-			if (player.getInput() == 1) {
-				attackEnemy(player, enemyTeam, playerTeam);
-			} else if (player.getInput() == 2) {
-				useAbility(player, enemyTeam, playerTeam);
-			} else if (player.getInput() == 3) {
-				defend(player, enemyTeam);
-			} else if (player.getInput() == 4) {
-				analyze(player, enemyTeam, playerTeam);
-			}
+		} else if (player instanceof Caster) {
+			chooseOption(player, enemyTeam, playerTeam);
+		} else if (player instanceof Fighter) {
+			chooseOption(player, enemyTeam, playerTeam);
 		}
-		
-	 }
+	}
+	
+	default void chooseOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+		System.out.println("What do you want to do?");
+		for (int i = 0; i < options.length; i++) {
+			System.out.println((i+1) + ". " + options[i]);
+		}
+		player.setInput(Integer.parseInt(sc.nextLine()));	
+		if (player.getInput() == 1) {
+			attackEnemy(player, enemyTeam, playerTeam);
+		} else if (player.getInput() == 2) {
+			useAbility(player, enemyTeam, playerTeam);
+		} else if (player.getInput() == 3) {
+			defend(player, enemyTeam);
+		} else if (player.getInput() == 4) {
+			analyze(player, enemyTeam, playerTeam);
+		}
+	}
 	
 	default void attackEnemy(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		/* Method for attacking the enemy
@@ -57,15 +63,15 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 			int miss = rnd.nextInt(100) + 1;
 			if (miss <= player.getMissChance()) {
 			missChance();
-		} else {
-			int crit = rnd.nextInt(100) + 1;
-			if (crit <= player.getCriticalChance()) critChance(player);
-			enemyTeam.get(player.getInput()).setHealth(enemyTeam.get(player.getInput()).getHealth() - player.getDamage());
-			System.out.println(
-					player.getName() + " attacked " +  enemyTeam.get(player.getInput()).getName() + 
-					" for " + (int)player.getDamage() + " damage. HP: " +
-					enemyTeam.get(player.getInput()).getHealth() + "/" + enemyTeam.get(player.getInput()).getBaseHealth() + "\n");
-			player.setDamage(player.getBaseDamage());
+			} else {
+				int crit = rnd.nextInt(100) + 1;
+				if (crit <= player.getCriticalChance()) critChance(player);
+				enemyTeam.get(player.getInput()).setHealth(enemyTeam.get(player.getInput()).getHealth() - player.getDamage());
+				System.out.println(
+						player.getName() + " attacked " +  enemyTeam.get(player.getInput()).getName() + 
+						" for " + (int)player.getDamage() + " damage. HP: " +
+						enemyTeam.get(player.getInput()).getHealth() + "/" + enemyTeam.get(player.getInput()).getBaseHealth() + "\n");
+				player.setDamage(player.getBaseDamage());
 			}
 		}
 	}	

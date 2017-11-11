@@ -14,6 +14,7 @@ public class Program {
 	 * If you kill several enemies at once, both of them wont get removed from the game.
 	 * It doesnt tell you both died either.
 	 * Enemy crit doesnt always yield twice the damage (HumanArcher was affected, was the first attacker out of 5.
+	 * AIMED SHOT bugs when the intended target dies before the shot hits. It immediately kills the next target.
 	 */	
 	
 	public static void main(String[] args) throws InterruptedException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -27,6 +28,11 @@ public class Program {
 		playerTeam.add(claire);
 		System.out.println();
 		Player.printStats(playerTeam);
+		
+		System.out.println(
+				"\n\nWelcome to this RPG Adventure!\n\n"
+				);
+		
 		Patrole enemyTeam = new Patrole();
 		Battle b = new Battle(playerTeam, enemyTeam.patroleType());
 		b.battle();

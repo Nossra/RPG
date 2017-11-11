@@ -19,7 +19,7 @@ public abstract class Player extends Unit implements IPlayerModels {
 	static public void printStats(ArrayList<Player> player) {
 		System.out.printf("%45s%n", "PLAYER TEAM STATUS\n");
 		String headerFormat = "%-9S %-7s  %-7s  %-8s  %-9s %-8s %-7s  %-7s  %-7s%n";
-		String valueFormat = "%-9s %-7s  %-8d %-8s  %-8s  %-7s  %-7d  %-7s  %-7s%n";
+		String valuesFormat = "%-9s %-7s  %-8d %-8s  %-8s  %-7s  %-7d  %-7s  %-7s%n";
 		System.out.printf(headerFormat, "NAME", "CLASS", "LEVEL", "XP", "HP", "MP", "DAMAGE", "CRIT", "MISS");
 		for (int i = 0; i < player.size(); i++) {
 			String xp = player.get(i).getExp() + "/" + player.get(i).getExpCap();
@@ -27,7 +27,7 @@ public abstract class Player extends Unit implements IPlayerModels {
 			String mp = player.get(i).getMana() + "/" + player.get(i).getBaseMana();
 			String crit = player.get(i).getCriticalChance() + "%";
 			String miss = player.get(i).getMissChance() + "%";
-			System.out.printf(valueFormat, 
+			System.out.printf(valuesFormat, 
 					player.get(i).getName(), player.get(i).getClass().getSimpleName(), player.get(i).getLevel(), xp, 
 					hp, mp, player.get(i).getDamage(), crit , miss);
 		}

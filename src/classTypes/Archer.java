@@ -13,7 +13,7 @@ public class Archer extends Job implements IArcherSpells {
 		this.setArmor(1);
 		this.setSpeed(4);
 		this.setCriticalChance(40);
-		this.setMissChance(20);
+		this.setMissChance(15);
 		this.setMana(50);
 		this.setBaseMana(50);
 	}

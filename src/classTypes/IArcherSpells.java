@@ -21,7 +21,7 @@ public interface IArcherSpells extends ITargeting {
 	double TS_DAMAGE_MULTIPLIER = 0.75;
 	
 	String[] printArcher = {
-			"Aimed Shot, " + AS_MANA_COST + " MP\n   Aimed shot: Physical ability, deals " + (int)(AS_DAMAGE_MULTIPLIER*100) + "% damage but takes one round to aim.\n",
+			"Aimed Shot, " + AS_MANA_COST + " MP\n   Aimed shot: Deals " + (int)(AS_DAMAGE_MULTIPLIER*100) + "% damage but takes one round to aim.\n",
 			"Trick Shot, " + TS_MANA_COST + " MP\n   Trick Shot: Ricochet the arrow to hit all targets for " + (int)(TS_DAMAGE_MULTIPLIER*100) + "% damage.\n" };
 	Random rnd = new Random();
 
@@ -31,7 +31,7 @@ public interface IArcherSpells extends ITargeting {
 			useAbility(player, enemyTeam, playerTeam);
 		} else {
 			((Archer) player).setAiming(true);
-			System.out.println(player.getName() + " targets " + enemyTeam.get(player.getInput()) + " for a heavy attack!");
+			System.out.println(player.getName() + " targets " + enemyTeam.get(player.getInput()).getName() + " for a heavy attack!");
 		}
 	}
 	
@@ -51,8 +51,9 @@ public interface IArcherSpells extends ITargeting {
 								enemyTeam.get(player.getInput()).getBaseHealth());
 				System.out.println();
 				player.setDamage(player.getBaseDamage());
-				((Archer) player).setAiming(false);
+				
 			}
+			((Archer) player).setAiming(false);
 		}
 	}
 
