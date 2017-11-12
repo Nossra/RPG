@@ -16,10 +16,10 @@ public abstract class Player extends Unit implements IPlayerModels {
 		this.setExpCap(75);
 	}
 	
-	static public void printStats(ArrayList<Player> player) {
+	static public void printTeamStatus(ArrayList<Player> player) {
 		System.out.printf("%45s%n", "PLAYER TEAM STATUS\n");
-		String headerFormat = "%-9S %-7s  %-7s  %-8s  %-9s %-8s %-7s  %-7s  %-7s%n";
-		String valuesFormat = "%-9s %-7s  %-8d %-8s  %-8s  %-7s  %-7d  %-7s  %-7s%n";
+		String headerFormat = "%-15S %-7s  %-7s  %-8s  %-9s %-8s %-7s  %-7s  %-7s%n";
+		String valuesFormat = "%-15s %-7s  %-8d %-8s  %-8s  %-7s  %-7d  %-7s  %-7s%n";
 		System.out.printf(headerFormat, "NAME", "CLASS", "LEVEL", "XP", "HP", "MP", "DAMAGE", "CRIT", "MISS");
 		for (int i = 0; i < player.size(); i++) {
 			String xp = player.get(i).getExp() + "/" + player.get(i).getExpCap();
@@ -63,7 +63,7 @@ public abstract class Player extends Unit implements IPlayerModels {
 		
 		playerTeam.get(i).setExpCap((int) (playerTeam.get(i).getExpCap() + (playerTeam.get(i).getExpCap() * 2.3)));
 		}	
-		printStats(playerTeam);
+		printTeamStatus(playerTeam);
 		TimeUnit.SECONDS.sleep(2);
 		System.out.println();
 	}

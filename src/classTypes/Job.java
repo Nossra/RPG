@@ -27,17 +27,39 @@ public abstract class Job extends Player {
 		String name = sc.nextLine();
 		if (input == 1) {
 			Fighter f = new Fighter(name);
+			f.playerBoost();
 		//	f.printStats();
 			return f;
 		} else if (input == 2) {
 			Caster c = new Caster(name);
+			c.playerBoost();
 		//	c.printStats();
 			return c;
 		} else if (input == 3) {
 			Archer a = new Archer(name);
+			a.playerBoost();
 		//	a.printStats();
 			return a;
 		}
 		return null;
+	}
+	
+	public void playerBoost() {
+		int playerBoost = 20;
+		int playerCritBoost = 10;
+		int playerMissBoost = 5;
+		
+		this.setDamage(this.getDamage() + playerBoost);
+		this.setBaseDamage(this.getBaseDamage() + playerBoost);
+		this.setHealth(this.getHealth() + playerBoost);
+		this.setBaseHealth(this.getBaseHealth() + playerBoost);
+		this.setMana(this.getMana() + playerBoost);
+		this.setBaseMana(this.getBaseMana() + playerBoost);
+		this.setCriticalChance(this.getCriticalChance() + playerCritBoost);
+		this.setMissChance(this.getMissChance() - playerMissBoost);
+	}
+	
+	static public void characterSheet() {
+		System.out.println("");
 	}
 }

@@ -4,6 +4,6 @@ import models.Enemy;
 public abstract class Orc extends Enemy {
 	
 	public Orc() {
-		this.setExperienceDrop(17);
+		this.setExperienceDrop(27);
 	}
 }

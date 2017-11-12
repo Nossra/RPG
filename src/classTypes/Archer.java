@@ -2,7 +2,7 @@ package classTypes;
 
 public class Archer extends Job implements IArcherSpells {
 	
-	private boolean aiming = false;;
+	
 	
 	public Archer(String name) {
 		this.setName(name);
@@ -18,12 +18,6 @@ public class Archer extends Job implements IArcherSpells {
 		this.setBaseMana(50);
 	}
 
-	public boolean isAiming() {
-		return aiming;
-	}
 
-	public void setAiming(boolean aiming) {
-		this.aiming = aiming;
-	}
 
 }

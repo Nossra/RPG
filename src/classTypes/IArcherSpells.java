@@ -17,7 +17,7 @@ public interface IArcherSpells extends ITargeting {
 	static int TS_MANA_COST = 10;
 	
 	// MULTIPLIERS
-	double AS_DAMAGE_MULTIPLIER = 2.75;
+	double AS_DAMAGE_MULTIPLIER = 2.5;
 	double TS_DAMAGE_MULTIPLIER = 0.75;
 	
 	String[] printArcher = {
@@ -30,30 +30,34 @@ public interface IArcherSpells extends ITargeting {
 		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
 			useAbility(player, enemyTeam, playerTeam);
 		} else {
-			((Archer) player).setAiming(true);
+			((Archer) player).setCharging(true);
+			player.setTargeting(enemyTeam.get(player.getInput()).getId());
 			System.out.println(player.getName() + " targets " + enemyTeam.get(player.getInput()).getName() + " for a heavy attack!");
 		}
 	}
 	
-	default void aiming(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
-		while (((Archer) player).isAiming() == true) {
+	default void fireAS(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+		while (((Archer) player).isCharging() == true) {
 			int miss = rnd.nextInt(100) + 1;
 			if (miss <= player.getMissChance()) {
 				missChance();
 			} else {
 				int crit = rnd.nextInt(100) + 1;
 				if (crit < player.getCriticalChance()) critChance(player);
-				enemyTeam.get(player.getInput()).setHealth((int) (-player.getDamage() * AS_DAMAGE_MULTIPLIER));
-				System.out.println(
-						player.getName() + "'s Aimed Shot dealt " + player.getDamage() * AS_DAMAGE_MULTIPLIER
-								+ " to " + enemyTeam.get(player.getInput()).getName() + ", HP: "
-								+ enemyTeam.get(player.getInput()).getHealth() + "/" + 
-								enemyTeam.get(player.getInput()).getBaseHealth());
-				System.out.println();
-				player.setDamage(player.getBaseDamage());
-				
+				for (int i = 0; i < enemyTeam.size(); i++) {
+					if (enemyTeam.get(i).getId() == player.getTargeting()) {
+						enemyTeam.get(i).setHealth((int) (-player.getDamage() * AS_DAMAGE_MULTIPLIER));
+						System.out.println(
+								player.getName() + "'s Aimed Shot dealt " + player.getDamage() * AS_DAMAGE_MULTIPLIER
+										+ " to " + enemyTeam.get(i).getName() + ", HP: "
+										+ enemyTeam.get(i).getHealth() + "/" + 
+										enemyTeam.get(i).getBaseHealth());
+						System.out.println();
+						player.setDamage(player.getBaseDamage());
+					}
+				}			
 			}
-			((Archer) player).setAiming(false);
+			((Archer) player).setCharging(false);
 		}
 	}
 

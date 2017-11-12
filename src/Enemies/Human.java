@@ -5,6 +5,6 @@ import models.Enemy;
 public abstract class Human extends Enemy {
 
 	public Human() {
-		this.setExperienceDrop(12);
+		this.setExperienceDrop(19);
 	}
 }

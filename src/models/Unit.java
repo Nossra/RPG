@@ -1,6 +1,7 @@
 package models;
 
 import java.text.DecimalFormat;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Unit {
@@ -17,9 +18,12 @@ public abstract class Unit {
 	private int missChance;
 	protected boolean playableCharacter = false;
 	private final int ID;
+	private int targeting; 
+	private boolean chargingUp = false;
 
 	static AtomicInteger nextId = new AtomicInteger();
 	DecimalFormat df = new DecimalFormat("###");	
+	Scanner sc = new Scanner(System.in);
 		
 	public Unit() {
 		//This is used to remove or bring back a unit from death by its ID.
@@ -125,6 +129,27 @@ public abstract class Unit {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if (name.length() >= 15) {
+			System.out.println("NAME TOO LONG! Names can be a maximum of 15 characters long. Try again:");
+			setName(sc.nextLine());
+		} else {
+			this.name = name;
+		}		
+	}
+
+	public int getTargeting() {
+		return targeting;
+	}
+
+	public void setTargeting(int targeting) {
+		this.targeting = targeting;
+	}
+	
+	public boolean isCharging() {
+		return chargingUp;
+	}
+
+	public void setCharging(boolean chargingUp) {
+		this.chargingUp = chargingUp;
 	}
 }

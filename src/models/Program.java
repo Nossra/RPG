@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Battle.Battle;
 import Battle.Patrole;
 import classTypes.Archer;
+import classTypes.Caster;
 import classTypes.Fighter;
 import classTypes.Job;
 
@@ -22,12 +23,14 @@ public class Program {
 		Player player = Job.createCharacter();
 		Archer anna = new Archer("Anna");
 		Fighter claire = new Fighter("Claire");
+		Caster harald = new Caster("Herald");
 		ArrayList<Player> playerTeam = new ArrayList<Player>();
 		playerTeam.add(player);
 		playerTeam.add(anna);
 		playerTeam.add(claire);
+		playerTeam.add(harald);
 		System.out.println();
-		Player.printStats(playerTeam);
+		Player.printTeamStatus(playerTeam);
 		
 		System.out.println(
 				"\n\nWelcome to this RPG Adventure!\n\n"

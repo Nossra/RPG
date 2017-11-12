@@ -22,8 +22,8 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 	default void classOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		if (player instanceof Archer) {
 			Archer archer = (Archer) player;
-			if (archer.isAiming() == true) {
-				archer.aiming(player, enemyTeam, playerTeam);
+			if (archer.isCharging() == true) {
+				archer.fireAS(player, enemyTeam, playerTeam);
 			} else {
 				chooseOption(player, enemyTeam, playerTeam);
 			}

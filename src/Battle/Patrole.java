@@ -25,7 +25,6 @@ public class Patrole {
 		return enemyTeam;
 	}
 	
-	//Method to create the patrole of humans. It randoms the number of enemies (3 or 4) and then randoms what Orc enemy it wants to create
 	public ArrayList<Enemy> humanPatrole() {
 		numberOfEnemies = rnd.nextInt(3) + 3;
 		for (int i = 0; i<numberOfEnemies; i++) {
@@ -42,7 +41,6 @@ public class Patrole {
 		return enemyTeam;
 	}
 	
-	//Method to create the patrole of Orcs. It randoms the number of enemies (2 or 3) and then randoms what human enemy it wants to create
 	public ArrayList<Enemy> orcPatrole() {
 		numberOfEnemies = rnd.nextInt(3) + 2;
 		for (int i = 0; i<numberOfEnemies; i++) {

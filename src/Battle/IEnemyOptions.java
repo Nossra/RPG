@@ -17,18 +17,13 @@ public interface IEnemyOptions extends IEnemyModels {
 			enemyMissChance(currentEnemy);
 		} else {
 			int crit = rnd.nextInt(100) + 1;
-			if (crit <= currentEnemy.getCriticalChance()) {
-				enemyCritChance(currentEnemy);
-			}
-			else {
-				players.get(attackPlayer).setHealth(players.get(attackPlayer).getHealth() - currentEnemy.getBaseDamage());
-				System.out.println("The enemy " + currentEnemy.getClass().getSimpleName() + " attacked "
-						+ players.get(attackPlayer).getName().toUpperCase() + " for " + (int)currentEnemy.getBaseDamage() + "\n"
-						+ players.get(attackPlayer).getName().toUpperCase() + " now has "
-						+ (int)players.get(attackPlayer).getHealth() + " health left.\n");
-			}
+			if (crit <= currentEnemy.getCriticalChance()) enemyCritChance(currentEnemy);
+			players.get(attackPlayer).setHealth(players.get(attackPlayer).getHealth() - currentEnemy.getBaseDamage());
+			System.out.println("The enemy " + currentEnemy.getClass().getSimpleName() + " attacked "
+					+ players.get(attackPlayer).getName().toUpperCase() + " for " + (int)currentEnemy.getBaseDamage() + "\n"
+					+ players.get(attackPlayer).getName().toUpperCase() + " now has "
+					+ (int)players.get(attackPlayer).getHealth() + " health left.\n");
 			currentEnemy.setDamage(currentEnemy.getBaseDamage());
-		}
-		
+		}	
 	}
 }
