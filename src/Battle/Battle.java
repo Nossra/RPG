@@ -25,7 +25,8 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 		System.out.println("! ! B A T T L E ! ! ");
 		TimeUnit.SECONDS.sleep(1);
 	}
-	
+
+	//test
 	public void battle() throws InterruptedException {
 		int exp = expPool();
 		while (this.isFighting()) {
@@ -40,7 +41,6 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 						for (int j = 0; j < getPlayers().size(); j++) {
 							getPlayers().get(j).setCharging(false);
 						}
-						
 						this.setFighting(false);
 						break;
 					}
