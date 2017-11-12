@@ -32,7 +32,7 @@ public interface IFighterSpells extends IEnemyModels, IPlayerModels {
 			System.out.println((i+1) + ". " + printFighter[i]);
 		}
 		System.out.println("6. Go back.");
-		player.setInput(Integer.parseInt(sc.nextLine()));
+		player.setInput(0);
 	}
 	
 	default void notEnoughMana(Player player) throws InterruptedException {

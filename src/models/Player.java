@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public abstract class Player extends Unit implements IPlayerModels {
@@ -9,6 +10,8 @@ public abstract class Player extends Unit implements IPlayerModels {
 	private int exp;
 	private int expCap;
 	private int level = 1;
+	
+	Scanner sc = new Scanner(System.in);
 	
 	public Player() {
 		playableCharacter = true;
@@ -71,8 +74,19 @@ public abstract class Player extends Unit implements IPlayerModels {
 	public int getInput() {
 		return input;		
 	}
-	public void setInput(int input) {
-		this.input = input;
+	public void setInput(int modifier) {
+		try {
+			int inputCheck = Integer.parseInt(sc.nextLine());
+			if (inputCheck > 6 || inputCheck < 1) {
+				System.out.println("Choose between the given numbers. Try again:");
+				this.input = inputCheck + modifier;
+			}  else {
+				this.input = inputCheck + modifier;
+			}	
+		} catch (NumberFormatException e) {
+			System.out.println("That wasnt even a number.. Try again:");
+			setInput(0);
+		}			
 	}
 	public int getExp() {
 		return exp;

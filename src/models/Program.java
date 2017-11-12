@@ -1,5 +1,4 @@
 package models;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import Battle.Battle;
@@ -18,7 +17,7 @@ public class Program {
 	 * AIMED SHOT bugs when the intended target dies before the shot hits. It immediately kills the next target.
 	 */	
 	
-	public static void main(String[] args) throws InterruptedException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static void main(String[] args) throws Exception {
 		Job.printJobs();
 		Player player = Job.createCharacter();
 		Archer anna = new Archer("Anna");

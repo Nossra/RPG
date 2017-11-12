@@ -5,11 +5,8 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import Battle.ITargeting;
-import models.IPlayerModels;
 import models.Enemy;
-import models.IEnemyModels;
 import models.Player;
-import models.Unit;
 
 public interface IArcherSpells extends ITargeting {
 	// MANACOSTS
@@ -25,7 +22,7 @@ public interface IArcherSpells extends ITargeting {
 			"Trick Shot, " + TS_MANA_COST + " MP\n   Trick Shot: Ricochet the arrow to hit all targets for " + (int)(TS_DAMAGE_MULTIPLIER*100) + "% damage.\n" };
 	Random rnd = new Random();
 
-	default void aimedShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+	default void aimedShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
 		offensiveTarget(player, enemyTeam);
 		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
 			useAbility(player, enemyTeam, playerTeam);
@@ -62,7 +59,7 @@ public interface IArcherSpells extends ITargeting {
 	}
 
 	default void trickShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam)
-			throws InterruptedException {
+			throws Exception {
 		
 		offensiveTarget(player, enemyTeam);
 		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
@@ -90,16 +87,16 @@ public interface IArcherSpells extends ITargeting {
 		}
 	}
 	
-	default void printArcherAbilities(Player player) {
+	default void printArcherAbilities(Player player) throws Exception {
 		System.out.println("CHOOSE ABILITY");
 		for (int i = 0; i < printArcher.length; i++) {
 			System.out.println((i + 1) + ". " + printArcher[i]);
 		}
 		System.out.println("6. Go back.");
-		player.setInput(Integer.parseInt(sc.nextLine()));
+		player.setInput(0);
 	}
 	
-	default void notEnoughMana(Player player) throws InterruptedException {
+	default void notEnoughMana(Player player) throws Exception {
 		System.out.println("Not enough mana!");
 		TimeUnit.SECONDS.sleep(1);
 		printArcherAbilities(player);

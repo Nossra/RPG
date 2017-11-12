@@ -33,7 +33,7 @@ public interface ICasterSpells extends ITargeting {
 	Random rnd = new Random();
 
 	// BURNING DOT EFFECT? OR HIGHER CRIT DAMAGE?
-	default void fireBall(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+	default void fireBall(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
 		offensiveTarget(player, enemyTeam);
 		if (player.getInput() == 5) { //5 because it goes -1 in top (the actual input is 6.
 			useAbility(player, enemyTeam, playerTeam);
@@ -56,7 +56,7 @@ public interface ICasterSpells extends ITargeting {
 	}
 
 	default void chainLightning(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam)
-			throws InterruptedException {
+			throws Exception {
 		double dmgReduction = CL_DAMAGE_MULTIPLIER;
 		offensiveTarget(player, enemyTeam);
 		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
@@ -99,7 +99,7 @@ public interface ICasterSpells extends ITargeting {
 		System.out.println("maaaah");
 	}
 
-	default void healingWind(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
+	default void healingWind(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
 		
 		System.out.println("Who do you want to heal?");
 		defensiveTarget(player, playerTeam);
@@ -120,12 +120,12 @@ public interface ICasterSpells extends ITargeting {
 		}
 	}
 
-	default void printCasterAbilities(Player player) {
+	default void printCasterAbilities(Player player) throws Exception {
 		System.out.println("CHOOSE ABILITY");
 		for (int i = 0; i < printCaster.length; i++) {
 			System.out.println((i + 1) + ". " + printCaster[i]);
 		}
 		System.out.println("6. Go back.");
-		player.setInput(Integer.parseInt(sc.nextLine()));
+		player.setInput(0);
 	}
 }

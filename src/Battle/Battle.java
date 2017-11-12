@@ -27,7 +27,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 	}
 
 	//test
-	public void battle() throws InterruptedException {
+	public void battle() throws Exception {
 		int exp = expPool();
 		while (this.isFighting()) {
 			for (int i = 0; i < turnOrder.size(); i++) {
@@ -35,7 +35,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 					Player player = (Player) turnOrder.get(i);
 					playerTurn(i);
 					if (getEnemies().isEmpty()) {
-						System.out.println("The player wins this fight!\n");
+						System.out.println("YOU WIN\n");
 						TimeUnit.SECONDS.sleep(2);	
 						player.gainExperience((Player) turnOrder.get(i), getEnemies(), getPlayers(), exp);
 						for (int j = 0; j < getPlayers().size(); j++) {
@@ -66,7 +66,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 		return expPool;
 	}
 
-	public void playerTurn(int i) throws InterruptedException {
+	public void playerTurn(int i) throws Exception {
 		Player player = (Player) turnOrder.get(i);
 		printStatus();
 		System.out.println(player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
