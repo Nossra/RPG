@@ -1,5 +1,5 @@
 # Untitled-RPG
-A long term exercise im doing on my spare time for practice and entertainment. There is no list of specifications, I'm just running along with it and implementing new stuff as an idea pops into my head. 
+A long term exercise im doing on my spare time for practice and entertainment. There is no list of specifications, I'm just running along with it and implementing new stuff as new ideas pop into my head. 
 
 <b>Current Feature list (2017-11-10)</b>
 * Level progression
