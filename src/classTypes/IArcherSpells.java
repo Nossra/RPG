@@ -22,7 +22,7 @@ public interface IArcherSpells extends ITargeting {
 			"Trick Shot, " + TS_MANA_COST + " MP\n   Trick Shot: Ricochet the arrow to hit all targets for " + (int)(TS_DAMAGE_MULTIPLIER*100) + "% damage.\n" };
 	Random rnd = new Random();
 
-	default void aimedShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
+	default void aimedShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		offensiveTarget(player, enemyTeam);
 		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
 			useAbility(player, enemyTeam, playerTeam);
@@ -59,7 +59,7 @@ public interface IArcherSpells extends ITargeting {
 	}
 
 	default void trickShot(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam)
-			throws Exception {
+			throws InterruptedException {
 		
 		offensiveTarget(player, enemyTeam);
 		if (player.getInput() == 5) { // 5 because it goes -1 in top (the actual input is 6.
@@ -87,7 +87,7 @@ public interface IArcherSpells extends ITargeting {
 		}
 	}
 	
-	default void printArcherAbilities(Player player) throws Exception {
+	default void printArcherAbilities(Player player) throws InterruptedException {
 		System.out.println("CHOOSE ABILITY");
 		for (int i = 0; i < printArcher.length; i++) {
 			System.out.println((i + 1) + ". " + printArcher[i]);
@@ -96,7 +96,7 @@ public interface IArcherSpells extends ITargeting {
 		player.setInput(0);
 	}
 	
-	default void notEnoughMana(Player player) throws Exception {
+	default void notEnoughMana(Player player) throws InterruptedException {
 		System.out.println("Not enough mana!");
 		TimeUnit.SECONDS.sleep(1);
 		printArcherAbilities(player);
