@@ -22,12 +22,12 @@ public class Program {
 		Player player = Job.createCharacter();
 		Archer anna = new Archer("Anna");
 		Fighter claire = new Fighter("Claire");
-		Caster harald = new Caster("Herald");
+		Caster herald = new Caster("Herald");
 		ArrayList<Player> playerTeam = new ArrayList<Player>();
 		playerTeam.add(player);
 		playerTeam.add(anna);
 		playerTeam.add(claire);
-		playerTeam.add(harald);
+		playerTeam.add(herald);
 		System.out.println();
 		Player.printTeamStatus(playerTeam);
 		
