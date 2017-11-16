@@ -18,6 +18,7 @@ public interface ICasterSpells extends ITargeting {
 	double FB_DAMAGE_MULTIPLIER = 2.5;
 	double CL_DAMAGE_MULTIPLIER = 1.75;
 	double HW_MULTIPLIER = 3.0;
+	int PO_DURATION = 2;
 
 	String[] printCaster = {
 			"Fire Ball, " + FB_MANA_COST + " MP\n   Hurl a ball of fire at the target for "
@@ -26,7 +27,7 @@ public interface ICasterSpells extends ITargeting {
 					+ (int) (CL_DAMAGE_MULTIPLIER * 100)
 					+ "% damage, then bounces up to two times for lesser damage each time.\n",
 			"Polymorph, " + PO_MANA_COST
-					+ " MP\n   Transforms one opponent into a sheep, making that target unable to do anything for two rounds.\n",
+					+ " MP\n   Transforms one opponent into a sheep, making that target unable to do anything for " + PO_DURATION  + " rounds.\n",
 			"Healing Wind, " + HW_MANA_COST + " MP\n   Heal a target for " + (int) (HW_MULTIPLIER * 100)
 					+ "% of the caster's damage.\n" };
 	Scanner sc = new Scanner(System.in);
@@ -95,15 +96,26 @@ public interface ICasterSpells extends ITargeting {
 		}
 	}
 
-	default void polymorph(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
-		System.out.println("maaaah");
+	default void polymorph(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
+		offensiveTarget(player, enemyTeam);
+		if (player.getInput() == 5) { 
+			useAbility(player, enemyTeam, playerTeam);
+		} else {
+			int miss = rnd.nextInt(100) + 1;
+			if (miss <= player.getMissChance()) {
+				missChance();
+			} else {
+				enemyTeam.get(player.getInput()).setControlled(PO_DURATION);
+				System.out.println(enemyTeam.get(player.getInput()).getName() + ": Maah!");
+			}
+		}
 	}
 
 	default void healingWind(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
 		
 		System.out.println("Who do you want to heal?");
 		defensiveTarget(player, playerTeam);
-		if (player.getInput() == 5) { //5 because it goes -1 in top (the actual input is 6.
+		if (player.getInput() == 5) {
 			useAbility(player, enemyTeam, playerTeam);
 		} else {
 			player.setMana(player.getMana() - HW_MANA_COST);

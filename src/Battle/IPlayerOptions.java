@@ -19,6 +19,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 	Scanner sc = new Scanner(System.in);
 	Random rnd = new Random();
 	
+	
 	default void classOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws NumberFormatException, Exception {
 		if (player instanceof Archer) {
 			Archer archer = (Archer) player;
@@ -120,7 +121,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 	}
 	
 	default void defend(Player currentPlayer, ArrayList<Enemy> enemyTeam) {
-		System.out.println("You take a defensive stance. Your incoming damage taken is reduced depending on your armor.");
+		System.out.println("You take a defensive stance. Your incoming damage taken is reduced depending on your armor.\n");
 	}	
 	
 	default void analyze(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {

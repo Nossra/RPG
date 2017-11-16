@@ -1,4 +1,5 @@
 package Battle;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -13,51 +14,68 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 	protected ArrayList<Enemy> enemies;
 	protected ArrayList<Unit> turnOrder;
 	static Scanner sc = new Scanner(System.in);
-	
-	//Constructor for battle that takes the player team and the enemy team.
-	//The enemy team is created in the Patrole class which is then used in the battle class.
+
+	// Constructor for battle that takes the player team and the enemy team.
+	// The enemy team is created in the Patrole class which is then used in the
+	// battle class.
 	public Battle(ArrayList<Player> playerTeam, ArrayList<Enemy> enemyTeam) throws InterruptedException {
 		this.player = playerTeam;
 		this.enemies = enemyTeam;
 		turnOrder = new ArrayList<Unit>();
-		for (Player players : player) { turnOrder.add(players); }
-		for (Unit enemy : enemies) { turnOrder.add(enemy); }
+		for (Player players : player) {
+			turnOrder.add(players);
+		}
+		for (Unit enemy : enemies) {
+			turnOrder.add(enemy);
+		}
 		System.out.println("! ! B A T T L E ! ! ");
 		TimeUnit.SECONDS.sleep(1);
 	}
 
-	//test
+	// test
 	public void battle() throws Exception {
 		int exp = expPool();
 		while (this.isFighting()) {
 			for (int i = 0; i < turnOrder.size(); i++) {
 				if (turnOrder.get(i).getPlayable() == true) {
 					Player player = (Player) turnOrder.get(i);
-					playerTurn(i);
-					if (getEnemies().isEmpty()) {
-						System.out.println("YOU WIN\n");
-						TimeUnit.SECONDS.sleep(2);	
-						player.gainExperience((Player) turnOrder.get(i), getEnemies(), getPlayers(), exp);
-						for (int j = 0; j < getPlayers().size(); j++) {
-							getPlayers().get(j).setCharging(false);
+					if (turnOrder.get(i).getControlled() > 0) {
+						System.out.println(turnOrder.get(i).getName() + ": is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
+						turnOrder.get(i).reduceControl();
+						TimeUnit.SECONDS.sleep(2);
+					} else {
+						playerTurn(i);
+						if (getEnemies().isEmpty()) {
+							System.out.println("YOU WON\n");
+							TimeUnit.SECONDS.sleep(2);
+							player.gainExperience((Player) turnOrder.get(i), getEnemies(), getPlayers(), exp);
+							for (int j = 0; j < getPlayers().size(); j++) {
+								getPlayers().get(j).setCharging(false);
+							}
+							this.setFighting(false);
+							break;
 						}
-						this.setFighting(false);
-						break;
 					}
 				} else if (turnOrder.get(i).getPlayable() == false) {
-					enemyTurn(i);
-					if (getPlayers().isEmpty()) {
-						System.out.println("YOU DIED\n");
+					if (turnOrder.get(i).getControlled() > 0) {
+						System.out.println(turnOrder.get(i).getName() + ": is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
+						turnOrder.get(i).reduceControl();
 						TimeUnit.SECONDS.sleep(2);
-						this.setFighting(false);
-						break;
-					}
+					} else {
+						enemyTurn(i);
+						if (getPlayers().isEmpty()) {
+							System.out.println("YOU DIED\n");
+							TimeUnit.SECONDS.sleep(2);
+							this.setFighting(false);
+							break;
+						}
+					}					
 				}
-			}			
+			}
 		}
 	}
-	
-	//Amount of experience the players can earn from the battle.
+
+	// Amount of experience the players can earn from the battle.
 	public int expPool() {
 		int expPool = 0;
 		for (int i = 0; i < getEnemies().size(); i++) {
@@ -69,7 +87,8 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 	public void playerTurn(int i) throws Exception {
 		Player player = (Player) turnOrder.get(i);
 		printStatus();
-		System.out.println(player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
+		System.out.println(
+				player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
 		classOption(player, getEnemies(), getPlayers());
 		TimeUnit.SECONDS.sleep(2);
 		for (int j = 0; j < getEnemies().size(); j++) {
@@ -79,17 +98,17 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 				TimeUnit.SECONDS.sleep(1);
 				getEnemies().remove(j);
 				TimeUnit.SECONDS.sleep((long) 0.1);
-				//Removes the unit from the turnorder by its ID to remove the correct one.
+				// Removes the unit from the turnorder by its ID to remove the correct one.
 				for (int x = 0; x < turnOrder.size(); x++) {
 					if (turnOrder.get(x).getId() == tempEnemy) {
 						TimeUnit.SECONDS.sleep((long) 0.1);
-						turnOrder.remove(x);  
-					}	
+						turnOrder.remove(x);
+					}
 				}
-			} 
+			}
 		}
 	}
-	
+
 	public void enemyTurn(int i) throws InterruptedException {
 		Enemy currentEnemy = (Enemy) turnOrder.get(i);
 		System.out.println(currentEnemy.getName().toUpperCase() + "'S TURN!\n");
@@ -101,41 +120,40 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 				int currentPlayer = getPlayers().get(j).getId();
 				System.out.println(" -- " + getPlayers().get(j).getName().toUpperCase() + " HAS DIED. --\n");
 				getPlayers().remove(j);
-				//Removes the unit from the turnorder by its ID to remove the correct one.
+				// Removes the unit from the turnorder by its ID to remove the correct one.
 				for (int x = 0; x < turnOrder.size(); x++) {
 					if (turnOrder.get(x).getId() == currentPlayer) {
 						turnOrder.remove(x);
-					}	
+					}
 				}
 			}
 		}
 	}
-			
-	 public void enemyAI(Enemy currentEnemy) {
-		 attackPlayer(getPlayers(), currentEnemy);
-	 }
-	 
+
+	public void enemyAI(Enemy currentEnemy) {
+		attackPlayer(getPlayers(), currentEnemy);	
+	}
+
 	public void printStatus() {
-		String header = "%-15s %-10s %-10s%n";
-		String valuesFormat = "%-15s %-10s %-10s%n";
-		System.out.printf(header, "NAME", "HP", "MP");
+		String header = "%-15s %-10s %-7s %-10s%n";
+		String valuesFormat = "%-15s %-10s %-7s %-10d%n";
+		System.out.printf(header, "NAME", "HP", "MP", "CONTROLLED");
 		for (int i = 0; i < getPlayers().size(); i++) {
 			String hp = getPlayers().get(i).getHealth() + "/" + getPlayers().get(i).getBaseHealth();
 			String mp = getPlayers().get(i).getMana() + "/" + getPlayers().get(i).getBaseMana();
-			System.out.printf(valuesFormat,
-					player.get(i).getName(), hp, mp);
+			System.out.printf(valuesFormat, player.get(i).getName(), hp, mp, player.get(i).getControlled());
 		}
 		System.out.println();
-		String enemyHeader = "%-15s %-7s%n";
-		String enemyValues = "%-15s %-7s%n";
-		System.out.printf(enemyHeader, "NAME", "HP");
+		String enemyHeader = "%-15s %-10s %-1s%n";
+		String enemyValues = "%-15s %-10s %-1d%n";
+		System.out.printf(enemyHeader, "NAME", "HP", "CONTROLLED");
 		for (int i = 0; i < getEnemies().size(); i++) {
 			String hp = getEnemies().get(i).getHealth() + "/" + getEnemies().get(i).getBaseHealth();
-			System.out.printf(enemyValues, getEnemies().get(i).getName(), hp);
+			System.out.printf(enemyValues, getEnemies().get(i).getName(), hp, getEnemies().get(i).getControlled());
 		}
 		System.out.println();
 	}
-	 
+
 	public boolean isFighting() {
 		return fighting;
 	}
@@ -143,7 +161,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 	public void setFighting(boolean fighting) {
 		this.fighting = fighting;
 	}
-	
+
 	public ArrayList<Player> getPlayers() {
 		return player;
 	}

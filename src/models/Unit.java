@@ -20,6 +20,7 @@ public abstract class Unit {
 	private final int ID;
 	private int targeting; 
 	private boolean chargingUp = false;
+	private int controlled = 0;
 
 	static AtomicInteger nextId = new AtomicInteger();
 	DecimalFormat df = new DecimalFormat("###");	
@@ -151,5 +152,17 @@ public abstract class Unit {
 
 	public void setCharging(boolean chargingUp) {
 		this.chargingUp = chargingUp;
+	}
+
+	public int getControlled() {
+		return controlled;
+	}
+	
+	public void setControlled(int controlled) {
+		this.controlled = controlled;
+	}
+
+	public void reduceControl() {
+		this.controlled -= 1;
 	}
 }
