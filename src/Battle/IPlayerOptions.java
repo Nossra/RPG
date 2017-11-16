@@ -19,8 +19,12 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 	Scanner sc = new Scanner(System.in);
 	Random rnd = new Random();
 	
+<<<<<<< HEAD
 	
 	default void classOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws NumberFormatException, Exception {
+=======
+	default void classOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws NumberFormatException, InterruptedException {
+>>>>>>> b02f7ac9247dea1eac593bacc0811c0aabee7b98
 		if (player instanceof Archer) {
 			Archer archer = (Archer) player;
 			if (archer.isCharging() == true) {
@@ -35,7 +39,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 		}
 	}
 	
-	default void chooseOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
+	default void chooseOption(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		System.out.println("What do you want to do?");
 		for (int i = 0; i < options.length; i++) {
 			System.out.println((i+1) + ". " + options[i]);
@@ -57,7 +61,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 		}		
 	}
 	
-	default void attackEnemy(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws  Exception {
+	default void attackEnemy(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws  InterruptedException {
 		/* Method for attacking the enemy
 		 * Also includes calculation for crit or miss chance.
 		 */
@@ -82,7 +86,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 		}
 	}	
 	
-	default void useAbility(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {		
+	default void useAbility(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {		
 		if (player instanceof Archer) {
 			Archer a = (Archer) player;
 			a.printArcherAbilities(a);
@@ -124,7 +128,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 		System.out.println("You take a defensive stance. Your incoming damage taken is reduced depending on your armor.\n");
 	}	
 	
-	default void analyze(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
+	default void analyze(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		//Prints out the targets statistics.
 		//Also reverts back to chooseOption so it doesn't consume the round
 		printTargets(player, enemyTeam);
@@ -138,7 +142,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 		}
 	}
 	
-	default void notEnoughMana(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
+	default void notEnoughMana(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws InterruptedException {
 		System.out.println(" - NOT ENOUGH MANA - \n");
 		TimeUnit.SECONDS.sleep(1);
 		 useAbility(player, enemyTeam, playerTeam);
