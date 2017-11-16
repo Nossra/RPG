@@ -39,8 +39,10 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 			for (int i = 0; i < turnOrder.size(); i++) {
 				if (turnOrder.get(i).getPlayable() == true) {
 					Player player = (Player) turnOrder.get(i);
+					System.out.println(
+							player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
 					if (turnOrder.get(i).getControlled() > 0) {
-						System.out.println(turnOrder.get(i).getName() + ": is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
+						System.out.println(turnOrder.get(i).getName() + " is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
 						turnOrder.get(i).reduceControl();
 						TimeUnit.SECONDS.sleep(2);
 					} else {
@@ -57,8 +59,10 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 						}
 					}
 				} else if (turnOrder.get(i).getPlayable() == false) {
+					System.out.println(turnOrder.get(i).getName().toUpperCase() + "'S TURN!\n");
+					TimeUnit.SECONDS.sleep(1);
 					if (turnOrder.get(i).getControlled() > 0) {
-						System.out.println(turnOrder.get(i).getName() + ": is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
+						System.out.println(turnOrder.get(i).getName() + " is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
 						turnOrder.get(i).reduceControl();
 						TimeUnit.SECONDS.sleep(2);
 					} else {
@@ -87,8 +91,6 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 	public void playerTurn(int i) throws Exception {
 		Player player = (Player) turnOrder.get(i);
 		printStatus();
-		System.out.println(
-				player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
 		classOption(player, getEnemies(), getPlayers());
 		TimeUnit.SECONDS.sleep(2);
 		for (int j = 0; j < getEnemies().size(); j++) {
@@ -111,8 +113,6 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 
 	public void enemyTurn(int i) throws InterruptedException {
 		Enemy currentEnemy = (Enemy) turnOrder.get(i);
-		System.out.println(currentEnemy.getName().toUpperCase() + "'S TURN!\n");
-		TimeUnit.SECONDS.sleep(1);
 		enemyAI(currentEnemy);
 		TimeUnit.SECONDS.sleep(2);
 		for (int j = 0; j < getPlayers().size(); j++) {

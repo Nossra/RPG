@@ -11,7 +11,7 @@ public interface ICasterSpells extends ITargeting {
 	// MANACOSTS
 	static int FB_MANA_COST = 20;
 	static int CL_MANA_COST = 30;
-	static int PO_MANA_COST = 12;
+	static int PO_MANA_COST = 20;
 	static int HW_MANA_COST = 15;
 
 	// MULTIPLIERS
@@ -101,12 +101,13 @@ public interface ICasterSpells extends ITargeting {
 		if (player.getInput() == 5) { 
 			useAbility(player, enemyTeam, playerTeam);
 		} else {
+			player.setMana(player.getMana() - PO_MANA_COST);
 			int miss = rnd.nextInt(100) + 1;
 			if (miss <= player.getMissChance()) {
 				missChance();
 			} else {
 				enemyTeam.get(player.getInput()).setControlled(PO_DURATION);
-				System.out.println(enemyTeam.get(player.getInput()).getName() + ": Maah!");
+				System.out.println(enemyTeam.get(player.getInput()).getName() + ": Maah!\n");
 			}
 		}
 	}
