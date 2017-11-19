@@ -1,6 +1,7 @@
 package Battle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -8,17 +9,21 @@ import models.Enemy;
 import models.Player;
 import models.Unit;
 
-public class Battle implements IPlayerOptions, IEnemyOptions {
+public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 	protected boolean fighting = true;
 	protected ArrayList<Player> player;
 	protected ArrayList<Enemy> enemies;
 	protected ArrayList<Unit> turnOrder;
 	static Scanner sc = new Scanner(System.in);
+	
+	//first attempt at controlling status effects. my current is just a bunch of booleans which i dont like.
+	//public HashMap<Integer, Runnable> statusFX = new HashMap<Integer, Runnable>();
 
 	// Constructor for battle that takes the player team and the enemy team.
 	// The enemy team is created in the Patrole class which is then used in the
 	// battle class.
 	public Battle(ArrayList<Player> playerTeam, ArrayList<Enemy> enemyTeam) throws InterruptedException {
+		
 		this.player = playerTeam;
 		this.enemies = enemyTeam;
 		turnOrder = new ArrayList<Unit>();
@@ -28,10 +33,12 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 		for (Unit enemy : enemies) {
 			turnOrder.add(enemy);
 		}
+		
 		System.out.println("! ! B A T T L E ! ! ");
 		TimeUnit.SECONDS.sleep(1);
 	}
 
+	
 	// test
 	public void battle() throws Exception {
 		int exp = expPool();
@@ -39,8 +46,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 			for (int i = 0; i < turnOrder.size(); i++) {
 				if (turnOrder.get(i).getPlayable() == true) {
 					Player player = (Player) turnOrder.get(i);
-					System.out.println(
-							player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
+					System.out.println(player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
 					if (turnOrder.get(i).getControlled() > 0) {
 						System.out.println(turnOrder.get(i).getName() + " is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
 						turnOrder.get(i).reduceControl();
@@ -62,8 +68,8 @@ public class Battle implements IPlayerOptions, IEnemyOptions {
 					System.out.println(turnOrder.get(i).getName().toUpperCase() + "'S TURN!\n");
 					TimeUnit.SECONDS.sleep(1);
 					if (turnOrder.get(i).getControlled() > 0) {
-						System.out.println(turnOrder.get(i).getName() + " is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
-						turnOrder.get(i).reduceControl();
+						if (turnOrder.get(i).isPolymorphed() == true) polymorph(turnOrder.get(i));
+						if (turnOrder.get(i).isStunned() == true) stun(turnOrder.get(i));
 						TimeUnit.SECONDS.sleep(2);
 					} else {
 						enemyTurn(i);

@@ -11,7 +11,7 @@ public class Caster extends Job implements ICasterSpells {
 		this.setArmor(0);
 		this.setSpeed(2);
 		this.setCriticalChance(15);
-		this.setMissChance(20);
+		this.setMissChance(0);
 		this.setMana(75);
 		this.setBaseMana(75);
 	}

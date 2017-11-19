@@ -3,16 +3,20 @@ package classTypes;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import Battle.ITargeting;
 import models.IPlayerModels;
+import models.Enemy;
 import models.IEnemyModels;
 import models.Player;
 
-public interface IFighterSpells extends IEnemyModels, IPlayerModels {
+public interface IFighterSpells extends ITargeting {
 	String[] printFighter = { "Buff Damage", "Stun" };
 	
 	//MANACOSTS
-	static int BD_MANA_COST = 15;
-	static int S_MANA_COST = 20;
+	int BD_MANA_COST = 15;
+	int S_MANA_COST = 20;
+	
+	int S_DURATION = 2;
 
 	//CURRENTLY DOESNT RESET DAMAGE AFTER TWO ROUNDS
 	default void buffDamage(ArrayList<Player> playerTeam) {
@@ -22,8 +26,21 @@ public interface IFighterSpells extends IEnemyModels, IPlayerModels {
 		}		
 	}
 	
-	default void stun() {
-		System.out.println("Stun your opponent for 1 round");
+	default void stun(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
+		offensiveTarget(player, enemyTeam);
+		if (player.getInput() == 5) { 
+			useAbility(player, enemyTeam, playerTeam);
+		} else {
+			player.setMana(player.getMana() - S_MANA_COST);
+			int miss = rnd.nextInt(100) + 1;
+			if (miss <= player.getMissChance()) {
+				missChance();
+			} else {
+				enemyTeam.get(player.getInput()).setStunned(true);
+				enemyTeam.get(player.getInput()).setControlled(S_DURATION);
+				System.out.println(enemyTeam.get(player.getInput()).getName() + " got stunned for " + S_DURATION + " rounds!\n");
+			}
+		}
 	}
 	
 	default void printFighterAbilities(Player player) {

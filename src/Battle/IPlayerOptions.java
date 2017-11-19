@@ -113,7 +113,7 @@ public interface IPlayerOptions extends IPlayerModels, IEnemyModels {
 			if (player.getInput() == 1) {
 				if (player.getMana() < IFighterSpells.BD_MANA_COST) notEnoughMana(player, enemyTeam, playerTeam); else f.buffDamage(playerTeam);
 			} else if (player.getInput() == 2) {
-				if (player.getMana() < IFighterSpells.S_MANA_COST) notEnoughMana(player, enemyTeam, playerTeam); else f.stun();
+				if (player.getMana() < IFighterSpells.S_MANA_COST) notEnoughMana(player, enemyTeam, playerTeam); else f.stun(player, enemyTeam, playerTeam);
 			} else if (player.getInput() == 6) {
 				chooseOption(player, enemyTeam, playerTeam);
 			} 

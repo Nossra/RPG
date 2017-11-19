@@ -106,6 +106,7 @@ public interface ICasterSpells extends ITargeting {
 			if (miss <= player.getMissChance()) {
 				missChance();
 			} else {
+				enemyTeam.get(player.getInput()).setPolymorphed(true);
 				enemyTeam.get(player.getInput()).setControlled(PO_DURATION);
 				System.out.println(enemyTeam.get(player.getInput()).getName() + ": Maah!\n");
 			}

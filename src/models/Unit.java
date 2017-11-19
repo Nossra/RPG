@@ -1,8 +1,11 @@
 package models;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import Battle.IStatusEffects;
 
 public abstract class Unit {
 	private String name;
@@ -11,6 +14,7 @@ public abstract class Unit {
 	private int mana;
 	private int baseMana;
 	private int armor;
+	private double damageTaken;
 	private int baseDamage;
 	private int damage;
 	private int speed;
@@ -18,11 +22,13 @@ public abstract class Unit {
 	private int missChance;
 	protected boolean playableCharacter = false;
 	private final int ID;
+	static AtomicInteger nextId = new AtomicInteger();
 	private int targeting; 
 	private boolean chargingUp = false;
 	private int controlled = 0;
-
-	static AtomicInteger nextId = new AtomicInteger();
+	private boolean polymorphed = false;
+	private boolean stunned = false;
+		
 	DecimalFormat df = new DecimalFormat("###");	
 	Scanner sc = new Scanner(System.in);
 		
@@ -164,5 +170,29 @@ public abstract class Unit {
 
 	public void reduceControl() {
 		this.controlled -= 1;
+	}
+
+	public boolean isPolymorphed() {
+		return polymorphed;
+	}
+
+	public void setPolymorphed(boolean polymorphed) {
+		this.polymorphed = polymorphed;
+	}
+
+	public boolean isStunned() {
+		return stunned;
+	}
+
+	public void setStunned(boolean stunned) {
+		this.stunned = stunned;
+	}
+
+	public double getDamageTaken() {
+		return damageTaken;
+	}
+
+	public void setDamageTaken(double damageTaken) {
+		this.damageTaken = damageTaken;
 	}
 }
