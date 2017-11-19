@@ -43,4 +43,7 @@ A long term exercise im doing on my spare time for practice and entertainment. T
         * Mage
            * Gains extra abilities
         * Fighter
+* Status effects
+    * Control effects
+    * UPCOMING - Damage over time effects
    

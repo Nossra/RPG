@@ -48,9 +48,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 					Player player = (Player) turnOrder.get(i);
 					System.out.println(player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")");
 					if (turnOrder.get(i).getControlled() > 0) {
-						System.out.println(turnOrder.get(i).getName() + " is crowd controlled for " + turnOrder.get(i).getControlled() + " more rounds!\n");
-						turnOrder.get(i).reduceControl();
-						TimeUnit.SECONDS.sleep(2);
+						controlEffects(i);
 					} else {
 						playerTurn(i);
 						if (getEnemies().isEmpty()) {
@@ -68,9 +66,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 					System.out.println(turnOrder.get(i).getName().toUpperCase() + "'S TURN!\n");
 					TimeUnit.SECONDS.sleep(1);
 					if (turnOrder.get(i).getControlled() > 0) {
-						if (turnOrder.get(i).isPolymorphed() == true) polymorph(turnOrder.get(i));
-						if (turnOrder.get(i).isStunned() == true) stun(turnOrder.get(i));
-						TimeUnit.SECONDS.sleep(2);
+						controlEffects(i);
 					} else {
 						enemyTurn(i);
 						if (getPlayers().isEmpty()) {
@@ -83,6 +79,11 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 				}
 			}
 		}
+	}
+	private void controlEffects(int i) throws InterruptedException {
+		if (turnOrder.get(i).isPolymorphed() == true) polymorph(turnOrder.get(i));
+		if (turnOrder.get(i).isStunned() == true) stun(turnOrder.get(i));
+		TimeUnit.SECONDS.sleep(2);
 	}
 
 	// Amount of experience the players can earn from the battle.

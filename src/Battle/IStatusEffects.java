@@ -3,8 +3,6 @@ package Battle;
 import models.Unit;
 
 public interface IStatusEffects {
-
-	String[] statusEffects = { "Polymorph", "Stun" };
 	
 	default void polymorph(Unit target) {
 		System.out.print(target.getName() + ": maah!" + target.getName() + "\nGot healed from " + target.getHealth() + "/" + target.getBaseHealth());
