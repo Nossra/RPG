@@ -8,6 +8,7 @@ import models.IPlayerModels;
 import models.Enemy;
 import models.IEnemyModels;
 import models.Player;
+import models.Unit;
 
 public interface IFighterSpells extends ITargeting {
 	String[] printFighter = { "Buff Damage", "Stun" };
@@ -16,8 +17,10 @@ public interface IFighterSpells extends ITargeting {
 	int BD_MANA_COST = 15;
 	int S_MANA_COST = 20;
 	
-	int S_DURATION = 2;
-
+	int ST_DURATION = 2;
+	
+	
+	
 	//CURRENTLY DOESNT RESET DAMAGE AFTER TWO ROUNDS
 	default void buffDamage(ArrayList<Player> playerTeam) {
 		System.out.println("Doubles party members damage for two rounds.");
@@ -37,8 +40,8 @@ public interface IFighterSpells extends ITargeting {
 				missChance();
 			} else {
 				enemyTeam.get(player.getInput()).setStunned(true);
-				enemyTeam.get(player.getInput()).setControlled(S_DURATION);
-				System.out.println(enemyTeam.get(player.getInput()).getName() + " got stunned for " + S_DURATION + " rounds!\n");
+				enemyTeam.get(player.getInput()).setControlled(ST_DURATION);
+				System.out.println(enemyTeam.get(player.getInput()).getName() + " got stunned for " + ST_DURATION + " rounds!\n");
 			}
 		}
 	}

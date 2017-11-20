@@ -26,5 +26,4 @@ public class Enemy extends Unit {
 	public void setExperienceDrop(int experienceDrop) {
 		this.experienceDrop = experienceDrop;
 	}
-	
 }

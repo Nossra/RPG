@@ -18,5 +18,4 @@ public class OrcWarlock extends Orc implements IOrcSpells {
 		this.setDamage(damage);
 		this.setSpeed(2);
 	}
-
 }

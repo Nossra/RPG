@@ -1,5 +1,7 @@
 package classTypes;
 
+import models.Unit;
+
 public class Caster extends Job implements ICasterSpells {
 	
 	public Caster(String name) {

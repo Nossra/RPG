@@ -18,5 +18,4 @@ public class OrcGrunt extends Orc {
 		this.setDamage(damage);
 		this.setSpeed(1);
 	}
-
 }

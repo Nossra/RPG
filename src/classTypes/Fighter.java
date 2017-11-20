@@ -1,5 +1,7 @@
 package classTypes;
 
+import models.Unit;
+
 public class Fighter extends Job implements IFighterSpells {
 	
 	public Fighter(String name) {

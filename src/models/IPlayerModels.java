@@ -28,6 +28,4 @@ public interface IPlayerModels {
 		System.out.print(" - CRITICAL HIT! - ");
 		currentPlayer.setDamage(currentPlayer.getBaseDamage()*2);
 	}
-	
-	
 }

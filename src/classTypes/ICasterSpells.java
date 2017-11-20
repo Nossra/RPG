@@ -6,6 +6,7 @@ import java.util.Scanner;
 import Battle.ITargeting;
 import models.Enemy;
 import models.Player;
+import models.Unit;
 
 public interface ICasterSpells extends ITargeting {
 	// MANACOSTS
@@ -114,7 +115,6 @@ public interface ICasterSpells extends ITargeting {
 	}
 
 	default void healingWind(Player player, ArrayList<Enemy> enemyTeam, ArrayList<Player> playerTeam) throws Exception {
-		
 		System.out.println("Who do you want to heal?");
 		defensiveTarget(player, playerTeam);
 		if (player.getInput() == 5) {

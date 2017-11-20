@@ -1,9 +1,7 @@
 package classTypes;
 
 public class Archer extends Job implements IArcherSpells {
-	
-	
-	
+		
 	public Archer(String name) {
 		this.setName(name);
 		this.setBaseDamage(135);
@@ -17,7 +15,4 @@ public class Archer extends Job implements IArcherSpells {
 		this.setMana(50);
 		this.setBaseMana(50);
 	}
-
-
-
 }

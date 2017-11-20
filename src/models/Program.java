@@ -11,10 +11,14 @@ import classTypes.Job;
 public class Program {
 	/*
 	 * KNOWN BUGS
-	 * If you kill several enemies at once, both of them wont get removed from the game.
-	 * It doesnt tell you both died either.
+	 * If you kill several enemies at once, both of them wont get removed from the game. It doesnt tell you both died either.
+	 * 
 	 * Enemy crit doesnt always yield twice the damage (HumanArcher was affected, was the first attacker out of 5.
+	 * 
 	 * AIMED SHOT bugs when the intended target dies before the shot hits. It immediately kills the next target.
+	 * 
+	 * Crowd controls bug if multiple effects are present on the same unit. Both get refreshed since they share the same "controlled" variable.
+	 * they should have a unique duration counter. 
 	 */	
 	
 	public static void main(String[] args) throws Exception {
