@@ -17,8 +17,6 @@ public interface IFighterSpells extends ITargeting {
 	int BD_MANA_COST = 15;
 	int S_MANA_COST = 20;
 	
-	int ST_DURATION = 2;
-	
 	
 	
 	//CURRENTLY DOESNT RESET DAMAGE AFTER TWO ROUNDS
@@ -40,8 +38,7 @@ public interface IFighterSpells extends ITargeting {
 				missChance();
 			} else {
 				enemyTeam.get(player.getInput()).setStunned(true);
-				enemyTeam.get(player.getInput()).setControlled(ST_DURATION);
-				System.out.println(enemyTeam.get(player.getInput()).getName() + " got stunned for " + ST_DURATION + " rounds!\n");
+				System.out.println(enemyTeam.get(player.getInput()).getName() + " got stunned for two rounds!\n");
 			}
 		}
 	}

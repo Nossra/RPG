@@ -1,11 +1,9 @@
 package models;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Battle.IStatusEffects;
 
 public abstract class Unit {
 	private String name;
@@ -25,7 +23,6 @@ public abstract class Unit {
 	static AtomicInteger nextId = new AtomicInteger();
 	private int targeting; 
 	private boolean chargingUp = false;
-	private int controlled = 0;
 	private boolean polymorphed = false;
 	private boolean stunned = false;
 		
@@ -46,9 +43,14 @@ public abstract class Unit {
 	
 	public void setHealth(int health) {		
 		this.health = health;
+		//This next if section is weird, if the setbasehealth in units is below the sethealth, it will end up with 0 
+		if (this.health > this.baseHealth) {
+			this.health = this.baseHealth;
+		}	
 		if (this.health < 1) {
 			this.health = 0;
-		} 
+		}
+				
 	}
 
 	public int getArmor() {
@@ -158,18 +160,6 @@ public abstract class Unit {
 
 	public void setCharging(boolean chargingUp) {
 		this.chargingUp = chargingUp;
-	}
-
-	public int getControlled() {
-		return controlled;
-	}
-	
-	public void setControlled(int controlled) {
-		this.controlled = controlled;
-	}
-
-	public void reduceControl() {
-		this.controlled -= 1;
 	}
 
 	public boolean isPolymorphed() {

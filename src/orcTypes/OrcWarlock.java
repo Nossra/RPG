@@ -11,8 +11,8 @@ public class OrcWarlock extends Orc implements IOrcSpells {
 
 	public OrcWarlock() {
 		this.setName("Orc Warlock");
-		this.setHealth(health);
 		this.setBaseHealth(health);
+		this.setHealth(health);
 		this.setArmor(2);
 		this.setBaseDamage(damage);
 		this.setDamage(damage);

@@ -11,8 +11,8 @@ public class OrcGrunt extends Orc {
 
 	public OrcGrunt() {
 		this.setName("Orc Grunt");
-		this.setHealth(health);
 		this.setBaseHealth(health);
+		this.setHealth(health);
 		this.setArmor(8);
 		this.setBaseDamage(damage);
 		this.setDamage(damage);

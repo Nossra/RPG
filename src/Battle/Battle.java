@@ -16,6 +16,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 	protected ArrayList<Unit> turnOrder;
 	static Scanner sc = new Scanner(System.in);
 	
+	
 	//first attempt at controlling status effects. my current is just a bunch of booleans which i dont like.
 	//public HashMap<Integer, Runnable> statusFX = new HashMap<Integer, Runnable>();
 
@@ -23,7 +24,6 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 	// The enemy team is created in the Patrole class which is then used in the
 	// battle class.
 	public Battle(ArrayList<Player> playerTeam, ArrayList<Enemy> enemyTeam) throws InterruptedException {
-		
 		this.player = playerTeam;
 		this.enemies = enemyTeam;
 		turnOrder = new ArrayList<Unit>();
@@ -47,9 +47,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 				if (turnOrder.get(i).getPlayable() == true) {
 					Player player = (Player) turnOrder.get(i);
 					System.out.println("----------------------\n" + player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")\n----------------------\n");
-					if (turnOrder.get(i).getControlled() > 0) {
-						controlEffects(i);
-					} else {
+					if (!controlEffects(i)) {
 						playerTurn(i);
 						if (getEnemies().isEmpty()) {
 							System.out.println("YOU WON\n");
@@ -65,9 +63,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 				} else if (turnOrder.get(i).getPlayable() == false) {
 					System.out.println(turnOrder.get(i).getName().toUpperCase() + "'S TURN!\n");
 					TimeUnit.SECONDS.sleep(1);
-					if (turnOrder.get(i).getControlled() > 0) {
-						controlEffects(i);
-					} else {
+					if (!controlEffects(i)) {
 						enemyTurn(i);
 						if (getPlayers().isEmpty()) {
 							System.out.println("YOU DIED\n");
@@ -75,16 +71,20 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 							this.setFighting(false);
 							break;
 						}
-					}					
+					} 				
 				}
 			}
 		}
 	}
-	private void controlEffects(int i) throws InterruptedException {
-		if (turnOrder.get(i).isPolymorphed() == true) polymorph(turnOrder.get(i));
-		if (turnOrder.get(i).isStunned() == true) stun(turnOrder.get(i));
-		turnOrder.get(i).reduceControl();
-		TimeUnit.SECONDS.sleep(2);
+	private boolean controlEffects(int i) throws InterruptedException {
+		if (turnOrder.get(i).isPolymorphed() == true || turnOrder.get(i).isStunned() == true) {
+			if (turnOrder.get(i).isPolymorphed() == true) polymorph(turnOrder.get(i));
+			if (turnOrder.get(i).isStunned() == true) stun(turnOrder.get(i));
+			TimeUnit.SECONDS.sleep(2);
+			return true;
+		} return false;
+		
+		
 	}
 
 	// Amount of experience the players can earn from the battle.
@@ -149,7 +149,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 		for (int i = 0; i < getPlayers().size(); i++) {
 			String hp = getPlayers().get(i).getHealth() + "/" + getPlayers().get(i).getBaseHealth();
 			String mp = getPlayers().get(i).getMana() + "/" + getPlayers().get(i).getBaseMana();
-			System.out.printf(valuesFormat, player.get(i).getName(), hp, mp, player.get(i).getControlled());
+			System.out.printf(valuesFormat, player.get(i).getName(), hp, mp, 0);
 		}
 		System.out.println();
 		String enemyHeader = "%-15s %-10s %-1s%n";
@@ -157,7 +157,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 		System.out.printf(enemyHeader, "NAME", "HP", "CONTROLLED");
 		for (int i = 0; i < getEnemies().size(); i++) {
 			String hp = getEnemies().get(i).getHealth() + "/" + getEnemies().get(i).getBaseHealth();
-			System.out.printf(enemyValues, getEnemies().get(i).getName(), hp, getEnemies().get(i).getControlled());
+			System.out.printf(enemyValues, getEnemies().get(i).getName(), hp, 0);
 		}
 		System.out.println();
 	}

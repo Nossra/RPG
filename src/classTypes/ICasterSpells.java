@@ -19,7 +19,6 @@ public interface ICasterSpells extends ITargeting {
 	double FB_DAMAGE_MULTIPLIER = 2.5;
 	double CL_DAMAGE_MULTIPLIER = 1.75;
 	double HW_MULTIPLIER = 3.0;
-	int PO_DURATION = 2;
 
 	String[] printCaster = {
 			"Fire Ball, " + FB_MANA_COST + " MP\n   Hurl a ball of fire at the target for "
@@ -28,7 +27,7 @@ public interface ICasterSpells extends ITargeting {
 					+ (int) (CL_DAMAGE_MULTIPLIER * 100)
 					+ "% damage, then bounces up to two times for lesser damage each time.\n",
 			"Polymorph, " + PO_MANA_COST
-					+ " MP\n   Transforms one opponent into a sheep, making that target unable to do anything for " + PO_DURATION  + " rounds.\n",
+					+ " MP\n   Transforms one opponent into a sheep, making that target unable to do anything for two rounds.\n",
 			"Healing Wind, " + HW_MANA_COST + " MP\n   Heal a target for " + (int) (HW_MULTIPLIER * 100)
 					+ "% of the caster's damage.\n" };
 	Scanner sc = new Scanner(System.in);
@@ -108,7 +107,6 @@ public interface ICasterSpells extends ITargeting {
 				missChance();
 			} else {
 				enemyTeam.get(player.getInput()).setPolymorphed(true);
-				enemyTeam.get(player.getInput()).setControlled(PO_DURATION);
 				System.out.println(enemyTeam.get(player.getInput()).getName() + ": Maah!\n");
 			}
 		}
@@ -124,9 +122,6 @@ public interface ICasterSpells extends ITargeting {
 			for (int i = 0; i < playerTeam.size(); i++) {
 				if (player.getInput() == i) {
 					playerTeam.get(i).setHealth((int) (player.getDamage() * HW_MULTIPLIER));
-					if (playerTeam.get(i).getHealth() > playerTeam.get(i).getBaseHealth()) {
-						playerTeam.get(i).setHealth(playerTeam.get(i).getBaseHealth());
-					}
 					System.out.println(player.getName() + " healed " + playerTeam.get(i).getName() + " for "
 							+ (int)(player.getDamage() * HW_MULTIPLIER) + " health.\n");
 				}
