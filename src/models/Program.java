@@ -48,7 +48,6 @@ public class Program {
 		Patrole et3 = new Patrole();
 		Battle b2 = new Battle(playerTeam, et3.patroleType());
 		b2.battle();
-		
 	}
 }
 	
