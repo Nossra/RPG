@@ -11,8 +11,8 @@ public class HumanWarrior extends Human {
 
 	public HumanWarrior() {
 		this.setName("Human Warrior");
-		this.setHealth(health);
 		this.setBaseHealth(health);
+		this.setHealth(health);		
 		this.setArmor(5);
 		this.setBaseDamage(damage);
 		this.setDamage(damage);
