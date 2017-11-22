@@ -8,6 +8,7 @@ public interface IStatusEffects {
 	
 	int PO_DURATION = 2;
 	double PO_HEAL_MODIFIER = 1.2;
+	
 	int ST_DURATION = 2;
 	double ST_DMG_TAKEN_MODIFIER = 1.3;
 	

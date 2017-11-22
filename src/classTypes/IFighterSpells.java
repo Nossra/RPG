@@ -38,6 +38,7 @@ public interface IFighterSpells extends ITargeting {
 				missChance();
 			} else {
 				enemyTeam.get(player.getInput()).setStunned(true);
+				enemyTeam.get(player.getInput()).setControlled(2);
 				System.out.println(enemyTeam.get(player.getInput()).getName() + " got stunned for two rounds!\n");
 			}
 		}

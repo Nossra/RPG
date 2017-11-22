@@ -25,6 +25,7 @@ public abstract class Unit {
 	private boolean chargingUp = false;
 	private boolean polymorphed = false;
 	private boolean stunned = false;
+	private int controlled;
 		
 	DecimalFormat df = new DecimalFormat("###");	
 	Scanner sc = new Scanner(System.in);
@@ -184,5 +185,17 @@ public abstract class Unit {
 
 	public void setDamageTaken(double damageTaken) {
 		this.damageTaken = damageTaken;
+	}
+
+	public int getControlled() {
+		return controlled;
+	}
+
+	public void setControlled(int controlled) {
+		this.controlled = controlled;
+	}
+	
+	public void reduceControl() {
+		this.setControlled(getControlled()-1);
 	}
 }

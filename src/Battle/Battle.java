@@ -35,7 +35,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 		}
 		
 		System.out.println("! ! B A T T L E ! ! ");
-		TimeUnit.SECONDS.sleep(1);
+		TimeUnit.SECONDS.sleep(2);
 	}
 
 	
@@ -46,12 +46,12 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 			for (int i = 0; i < turnOrder.size(); i++) {
 				if (turnOrder.get(i).getPlayable() == true) {
 					Player player = (Player) turnOrder.get(i);
-					System.out.println("----------------------\n" + player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")\n----------------------\n");
+					System.out.println("\n\n\n\n\n--------------------------------------------\n" + player.getName().toUpperCase() + "'S TURN! (" + player.getClass().getSimpleName().toUpperCase() + ")\n--------------------------------------------\n");
 					if (!controlEffects(i)) {
 						playerTurn(i);
 						if (getEnemies().isEmpty()) {
 							System.out.println("YOU WON\n");
-							TimeUnit.SECONDS.sleep(2);
+							TimeUnit.SECONDS.sleep(3);
 							player.gainExperience((Player) turnOrder.get(i), getEnemies(), getPlayers(), exp);
 							for (int j = 0; j < getPlayers().size(); j++) {
 								getPlayers().get(j).setCharging(false);
@@ -61,8 +61,8 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 						}
 					}
 				} else if (turnOrder.get(i).getPlayable() == false) {
-					System.out.println(turnOrder.get(i).getName().toUpperCase() + "'S TURN!\n");
-					TimeUnit.SECONDS.sleep(1);
+					System.out.println("\n\n\n\n\n--------------------------------------------\n"+turnOrder.get(i).getName().toUpperCase() + "'S TURN!\n--------------------------------------------\n");
+					TimeUnit.SECONDS.sleep(2);
 					if (!controlEffects(i)) {
 						enemyTurn(i);
 						if (getPlayers().isEmpty()) {
@@ -80,7 +80,8 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 		if (turnOrder.get(i).isPolymorphed() == true || turnOrder.get(i).isStunned() == true) {
 			if (turnOrder.get(i).isPolymorphed() == true) polymorph(turnOrder.get(i));
 			if (turnOrder.get(i).isStunned() == true) stun(turnOrder.get(i));
-			TimeUnit.SECONDS.sleep(2);
+			turnOrder.get(i).reduceControl();
+			TimeUnit.SECONDS.sleep(3);
 			return true;
 		} return false;
 		
@@ -157,7 +158,7 @@ public class Battle implements IPlayerOptions, IEnemyOptions, IStatusEffects {
 		System.out.printf(enemyHeader, "NAME", "HP", "CONTROLLED");
 		for (int i = 0; i < getEnemies().size(); i++) {
 			String hp = getEnemies().get(i).getHealth() + "/" + getEnemies().get(i).getBaseHealth();
-			System.out.printf(enemyValues, getEnemies().get(i).getName(), hp, 0);
+			System.out.printf(enemyValues, getEnemies().get(i).getName(), hp, getEnemies().get(i).getControlled());
 		}
 		System.out.println();
 	}
